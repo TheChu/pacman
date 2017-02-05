@@ -173,7 +173,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     fringe.push(startNode, heuristic(startNode.state, problem))
 
     while fringe:
-        (prevCost, node) = fringe.pop()
+        (_, node) = fringe.pop()
         if problem.isGoalState(node.state):
             return node.path
         if node.state not in closed:
@@ -182,10 +182,11 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 childState = child[0]
                 childDirection = child[1]
                 childCost = child[2]
-                childNode = util.Node(childState, childDirection, childCost,
+                childNode = util.Node(childState, childDirection,
+                                      node.cost + childCost,
                                       node.path + [childDirection])
-                fringe.push(childNode, prevCost + childCost +
-                                       heuristic(node.state, problem))
+                fringe.push(childNode, childNode.cost +
+                                       heuristic(childState, problem))
     return []
 
 # Abbreviations
