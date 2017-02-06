@@ -87,7 +87,6 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** YOUR CODE HERE ***"
-    # TODO: Comment!
     closed = []
     fringe = util.Stack()
     startNode = util.Node(problem.getStartState(), 'Start', 0, [])
@@ -111,7 +110,6 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    # TODO: Comment!
     closed = []
     fringe = util.PriorityQueue()
     startNode = util.Node(problem.getStartState(), 'Start', 0, [])
@@ -135,7 +133,6 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    # TODO: Comment!
     closed = []
     fringe = util.PriorityQueue()
     startNode = util.Node(problem.getStartState(), 'Start', 0, [])
@@ -166,7 +163,6 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    # TODO: Comment!
     closed = []
     fringe = util.PriorityQueue()
     startNode = util.Node(problem.getStartState(), 'Start', 0, [])

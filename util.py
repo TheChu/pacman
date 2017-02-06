@@ -132,7 +132,7 @@ class FixedRandom:
 """
 
 class Node:
-    # TODO: Comment!
+    "Holds relevant information for search"
     def __init__(self, state, direction, cost,path):
         self.state = state
         self.direction = direction
