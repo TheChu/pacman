@@ -89,7 +89,7 @@ def depthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
     closed = []
     fringe = util.Stack()
-    startNode = util.Node(problem.getStartState(), 'Start', 0, [])
+    startNode = Node(problem.getStartState(), 'Start', 0, [])
     fringe.push(startNode)
 
     while fringe:
@@ -102,7 +102,7 @@ def depthFirstSearch(problem):
                 childState = child[0]
                 childDirection = child[1]
                 childCost = child[2]
-                childNode = util.Node(childState, childDirection, childCost,
+                childNode = Node(childState, childDirection, childCost,
                                       node.path + [childDirection])
                 fringe.push(childNode)
     return []
@@ -112,11 +112,12 @@ def breadthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
     closed = []
     fringe = util.PriorityQueue()
-    startNode = util.Node(problem.getStartState(), 'Start', 0, [])
+    startNode = Node(problem.getStartState(), 'Start', 0, [])
     fringe.push(startNode, 0)
+    priority = 0
 
     while fringe:
-        (priority, node) = fringe.pop()
+        node = fringe.pop()
         if problem.isGoalState(node.state):
             return node.path
         if node.state not in closed:
@@ -125,9 +126,10 @@ def breadthFirstSearch(problem):
                 childState = child[0]
                 childDirection = child[1]
                 childCost = child[2]
-                childNode = util.Node(childState, childDirection, childCost,
+                childNode = Node(childState, childDirection, childCost,
                                       node.path + [childDirection])
                 fringe.push(childNode, priority + 1)
+        priority += 1
     return []
 
 def uniformCostSearch(problem):
@@ -135,11 +137,11 @@ def uniformCostSearch(problem):
     "*** YOUR CODE HERE ***"
     closed = []
     fringe = util.PriorityQueue()
-    startNode = util.Node(problem.getStartState(), 'Start', 0, [])
+    startNode = Node(problem.getStartState(), 'Start', 0, [])
     fringe.push(startNode, 0)
 
     while fringe:
-        (prevCost, node) = fringe.pop()
+        node = fringe.pop()
         if problem.isGoalState(node.state):
             return node.path
         if node.state not in closed:
@@ -148,9 +150,11 @@ def uniformCostSearch(problem):
                 childState = child[0]
                 childDirection = child[1]
                 childCost = child[2]
-                childNode = util.Node(childState, childDirection, childCost,
-                                      node.path + [childDirection])
-                fringe.push(childNode, prevCost + childCost)
+                childNode = Node(childState,
+                                 childDirection,
+                                 node.cost + childCost,
+                                 node.path + [childDirection])
+                fringe.push(childNode, node.cost + childCost)
     return []
 
 def nullHeuristic(state, problem=None):
@@ -165,11 +169,11 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     "*** YOUR CODE HERE ***"
     closed = []
     fringe = util.PriorityQueue()
-    startNode = util.Node(problem.getStartState(), 'Start', 0, [])
+    startNode = Node(problem.getStartState(), 'Start', 0, [])
     fringe.push(startNode, heuristic(startNode.state, problem))
 
     while fringe:
-        (_, node) = fringe.pop()
+        node = fringe.pop()
         if problem.isGoalState(node.state):
             return node.path
         if node.state not in closed:
@@ -178,12 +182,20 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 childState = child[0]
                 childDirection = child[1]
                 childCost = child[2]
-                childNode = util.Node(childState, childDirection,
+                childNode = Node(childState, childDirection,
                                       node.cost + childCost,
                                       node.path + [childDirection])
                 fringe.push(childNode, childNode.cost +
                                        heuristic(childState, problem))
     return []
+
+class Node:
+    "Holds relevant information for search"
+    def __init__(self, state, direction, cost,path):
+        self.state = state
+        self.direction = direction
+        self.cost = cost
+        self.path = path
 
 # Abbreviations
 bfs = breadthFirstSearch

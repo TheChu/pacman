@@ -131,14 +131,6 @@ class FixedRandom:
  Data structures useful for implementing SearchAgents
 """
 
-class Node:
-    "Holds relevant information for search"
-    def __init__(self, state, direction, cost,path):
-        self.state = state
-        self.direction = direction
-        self.cost = cost
-        self.path = path
-
 class Stack:
     "A container with a last-in-first-out (LIFO) queuing policy."
     def __init__(self):
@@ -193,8 +185,8 @@ class PriorityQueue:
         self.count += 1
 
     def pop(self):
-        (priority, _, item) = heapq.heappop(self.heap)
-        return (priority, item)
+        (_, _, item) = heapq.heappop(self.heap)
+        return item
 
     def isEmpty(self):
         return len(self.heap) == 0
